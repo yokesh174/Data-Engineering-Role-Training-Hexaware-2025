@@ -1,0 +1,19 @@
+Problem Statement 2 – Orders Management
+     An online store wants to track orders and customers.
+     Some customers may not have placed any order.
+     Some orders may exist without a valid customer (guest checkout).
+
+
+Focused Exercises
+
+1. List all orders with customer names (INNER JOIN).
+2. Show all orders including guest orders (customer_id = NULL).
+3. Show all customers including those with no orders.
+4. Find total number of orders per customer.
+5. Find total amount spent per customer.
+
+6. Show customers who haven’t placed any orders.
+7. Show orders above 20,000 in value.
+8. Find the average order amount.
+9. Show the maximum order amount per customer.
+10. Show the latest order date for each customer.
