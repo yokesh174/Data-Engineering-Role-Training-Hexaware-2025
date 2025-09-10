@@ -1,0 +1,42 @@
+Problem Statement – Library System
+
+A library wants to keep track of books. Each book has a title, author, genre, year of
+publication, and availability status.
+
+1. Create Database & Collection
+
+use libraryDB
+db.books.insertMany([
+{ title: "The Alchemist", author: "Paulo Coelho", genre: "Fiction", year: 1988,
+available: true },
+{ title: "Clean Code", author: "Robert C. Martin", genre: "Programming", year: 2008,
+available: true },
+{ title: "The Pragmatic Programmer", author: "Andrew Hunt", genre: "Programming",
+year: 1999, available: false },
+{ title: "Sapiens", author: "Yuval Noah Harari", genre: "History", year: 2011,
+available: true },
+{ title: "Atomic Habits", author: "James Clear", genre: "Self-Help", year: 2018,
+available: false }
+]);
+
+2. Exercises
+
+Basic Queries
+1. Show all books in the collection.
+2. Display only title and author of all books.
+3. Find all books that are currently available.
+4. Find all books in the "Programming" genre.
+5. Find books published after the year 2010.
+
+Updates
+6. Mark "Atomic Habits" as available.
+7. Update the year of publication for "The Alchemist" to 1993.
+
+Deletes
+8. Delete one book by "Andrew Hunt".
+9. Delete all books in the "History" genre.
+
+Aggregations
+10. Count how many books exist in each genre.
+11. Find the earliest published book.
+12. Show the average publication year of all books.
