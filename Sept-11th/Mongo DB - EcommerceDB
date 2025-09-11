@@ -170,3 +170,272 @@ email_1
 db.products.createIndex({category:1, price:-1});                                                             //Query
 
 category_1_price_-1
+
+db.products.find({ category: "Electronics" }).sort({ price: -1}).explain("executionStats")            //Query
+
+{
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'ecommerceDB.products',
+    parsedQuery: {
+      category: {
+        '$eq': 'Electronics'
+      }
+    },
+    indexFilterSet: false,
+    queryHash: 'D845C8AE',
+    planCacheShapeHash: 'D845C8AE',
+    planCacheKey: '0246D18B',
+    optimizationTimeMillis: 4,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    prunedSimilarIndexes: false,
+    winningPlan: {
+      isCached: false,
+      stage: 'FETCH',
+      inputStage: {
+        stage: 'IXSCAN',
+        keyPattern: {
+          category: 1,
+          price: -1
+        },
+        indexName: 'category_1_price_-1',
+        isMultiKey: false,
+        multiKeyPaths: {
+          category: [],
+          price: []
+        },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: {
+          category: [
+            '["Electronics", "Electronics"]'
+          ],
+          price: [
+            '[MaxKey, MinKey]'
+          ]
+        }
+      }
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 3,
+    executionTimeMillis: 4,
+    totalKeysExamined: 3,
+    totalDocsExamined: 3,
+    executionStages: {
+      isCached: false,
+      stage: 'FETCH',
+      nReturned: 3,
+      executionTimeMillisEstimate: 0,
+      works: 4,
+      advanced: 3,
+      needTime: 0,
+      needYield: 0,
+      saveState: 0,
+      restoreState: 0,
+      isEOF: 1,
+      docsExamined: 3,
+      alreadyHasObj: 0,
+      inputStage: {
+        stage: 'IXSCAN',
+        nReturned: 3,
+        executionTimeMillisEstimate: 0,
+        works: 4,
+        advanced: 3,
+        needTime: 0,
+        needYield: 0,
+        saveState: 0,
+        restoreState: 0,
+        isEOF: 1,
+        keyPattern: {
+          category: 1,
+          price: -1
+        },
+        indexName: 'category_1_price_-1',
+        isMultiKey: false,
+        multiKeyPaths: {
+          category: [],
+          price: []
+        },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: {
+          category: [
+            '["Electronics", "Electronics"]'
+          ],
+          price: [
+            '[MaxKey, MinKey]'
+          ]
+        },
+        keysExamined: 3,
+        seeks: 1,
+        dupsTested: 0,
+        dupsDropped: 0
+      }
+    }
+  },
+  queryShapeHash: '3CE6B28CE8EE5DA7BB081C872F4C32814B2DA5710D67B12CD7FA92AD5B597752',
+  command: {
+    find: 'products',
+    filter: {
+      category: 'Electronics'
+    },
+    sort: {
+      price: -1
+    },
+    '$db': 'ecommerceDB'
+  },
+  serverInfo: {
+    host: '157a0eb5b848598',
+    port: 27017,
+    version: '8.0.13',
+    gitVersion: '8dc5cd2a30c4524132e2d44bb314544dc477e611'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeRestricted',
+    internalQueryPlannerIgnoreIndexWithCollationForRegex: 1
+  },
+  ok: 1
+}
+
+db.products.find({ price:{ $gt: 20000}}).sort({ price: -1}).explain("executionStats")           //query
+
+{
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'ecommerceDB.products',
+    parsedQuery: {
+      price: {
+        '$gt': 20000
+      }
+    },
+    indexFilterSet: false,
+    queryHash: '40291542',
+    planCacheShapeHash: '40291542',
+    planCacheKey: 'D86A38A1',
+    optimizationTimeMillis: 4,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    prunedSimilarIndexes: false,
+    winningPlan: {
+      isCached: false,
+      stage: 'SORT',
+      sortPattern: {
+        price: -1
+      },
+      memLimit: 104857600,
+      type: 'simple',
+      inputStage: {
+        stage: 'COLLSCAN',
+        filter: {
+          price: {
+            '$gt': 20000
+          }
+        },
+        direction: 'forward'
+      }
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 2,
+    executionTimeMillis: 6,
+    totalKeysExamined: 0,
+    totalDocsExamined: 5,
+    executionStages: {
+      isCached: false,
+      stage: 'SORT',
+      nReturned: 2,
+      executionTimeMillisEstimate: 0,
+      works: 9,
+      advanced: 2,
+      needTime: 6,
+      needYield: 0,
+      saveState: 0,
+      restoreState: 0,
+      isEOF: 1,
+      sortPattern: {
+        price: -1
+      },
+      memLimit: 104857600,
+      type: 'simple',
+      totalDataSizeSorted: 206,
+      usedDisk: false,
+      spills: 0,
+      spilledDataStorageSize: 0,
+      inputStage: {
+        stage: 'COLLSCAN',
+        filter: {
+          price: {
+            '$gt': 20000
+          }
+        },
+        nReturned: 2,
+        executionTimeMillisEstimate: 0,
+        works: 6,
+        advanced: 2,
+        needTime: 3,
+        needYield: 0,
+        saveState: 0,
+        restoreState: 0,
+        isEOF: 1,
+        direction: 'forward',
+        docsExamined: 5
+      }
+    }
+  },
+  queryShapeHash: '4FF2CBC347D02534FE0C1E6360D81B1AF759B247E33BFCB0D30E653E14896792',
+  command: {
+    find: 'products',
+    filter: {
+      price: {
+        '$gt': 20000
+      }
+    },
+    sort: {
+      price: -1
+    },
+    '$db': 'ecommerceDB'
+  },
+  serverInfo: {
+    host: '157a0eb5b848598',
+    port: 27017,
+    version: '8.0.13',
+    gitVersion: '8dc5cd2a30c4524132e2d44bb314544dc477e611'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeRestricted',
+    internalQueryPlannerIgnoreIndexWithCollationForRegex: 1
+  },
+  ok: 1
+}
+
+
