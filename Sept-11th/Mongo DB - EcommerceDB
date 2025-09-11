@@ -140,3 +140,33 @@ db.orders.find({customer_id : 1 });                                             
   ],
   order_date: 2025-01-05T00:00:00.000Z
 }
+
+db.products.updateOne({_id: 103},{$set: {price: 3200 }});                                                        //Query
+
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+db.customers.updateOne({_id: 2},{$set: {city: "Gurgaon"}});                                                        //Query
+
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+//Index on email for fast lookup
+db.customers.createIndex({email: 1},{unique: true});                                                       //Query
+
+email_1
+
+//Compound Index on category + price  
+db.products.createIndex({category:1, price:-1});                                                             //Query
+
+category_1_price_-1
