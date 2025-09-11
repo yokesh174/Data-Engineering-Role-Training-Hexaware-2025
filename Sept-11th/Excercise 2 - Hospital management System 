@@ -1,0 +1,296 @@
+use hospitalDB
+switched to db hospitalDB
+db.patients.insertMany([
+  { _id: 1, name: "Arjun Mehta", age: 34, gender: "Male", city: "Bangalore" },
+  { _id: 2, name: "Neha Kapoor", age: 29, gender: "Female", city: "Delhi" },
+  { _id: 3, name: "Ravi Sharma", age: 45, gender: "Male", city: "Hyderabad" },
+  { _id: 4, name: "Priya Singh", age: 38, gender: "Female", city: "Chennai" }
+])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': 1,
+    '1': 2,
+    '2': 3,
+    '3': 4
+  }
+}
+db.doctors.insertMany([
+  { _id: 101, name: "Dr. Ramesh", specialization: "Cardiology", experience: 15 },
+  { _id: 102, name: "Dr. Sneha", specialization: "Dermatology", experience: 8 },
+  { _id: 103, name: "Dr. Amit", specialization: "Neurology", experience: 12 },
+  { _id: 104, name: "Dr. Pooja", specialization: "Orthopedics", experience: 10 }
+])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': 101,
+    '1': 102,
+    '2': 103,
+    '3': 104
+  }
+}
+db.appointments.insertMany([
+  { patient_id: 1, doctor_id: 101, date: ISODate("2025-01-05"), status: "Completed", fee: 2000 },
+  { patient_id: 2, doctor_id: 102, date: ISODate("2025-01-06"), status: "Completed", fee: 1500 },
+  { patient_id: 3, doctor_id: 103, date: ISODate("2025-01-07"), status: "Scheduled", fee: 2500 },
+  { patient_id: 4, doctor_id: 104, date: ISODate("2025-01-08"), status: "Completed", fee: 1800 },
+  { patient_id: 1, doctor_id: 104, date: ISODate("2025-01-10"), status: "Completed", fee: 2200 }
+])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('68c2b4a7f5add3b86909f19c'),
+    '1': ObjectId('68c2b4a7f5add3b86909f19d'),
+    '2': ObjectId('68c2b4a7f5add3b86909f19e'),
+    '3': ObjectId('68c2b4a7f5add3b86909f19f'),
+    '4': ObjectId('68c2b4a7f5add3b86909f1a0')
+  }
+}
+db.patients.insertOne({
+  _id: 5,
+  name: "Karan Patel",
+  age: 40,
+  gender: "Male",
+  city: "Mumbai"
+})
+{
+  acknowledged: true,
+  insertedId: 5
+}
+db.doctors.find({ specialization: "Cardiology" })
+{
+  _id: 101,
+  name: 'Dr. Ramesh',
+  specialization: 'Cardiology',
+  experience: 15
+}
+db.patients.updateOne(
+  { name: "Ravi Sharma" },
+  { $set: { city: "Pune" } }
+)
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+db.appointments.deleteOne({ status: "Completed" })
+{
+  acknowledged: true,
+  deletedCount: 1
+}
+db.patients.createIndex({ city: 1 })
+city_1
+db.doctors.createIndex({ specialization: 1, experience: -1 })
+specialization_1_experience_-1
+db.patients.getIndexes()
+db.doctors.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  {
+    v: 2,
+    key: { specialization: 1, experience: -1 },
+    name: 'specialization_1_experience_-1'
+  }
+]
+db.doctors.find({ specialization: "Cardiology" }).sort({ experience: -1 })
+{
+  _id: 101,
+  name: 'Dr. Ramesh',
+  specialization: 'Cardiology',
+  experience: 15
+}
+db.doctors.find({ name: "Dr. Sneha" })
+{
+  _id: 102,
+  name: 'Dr. Sneha',
+  specialization: 'Dermatology',
+  experience: 8
+}
+db.appointments.aggregate([
+  { $group: { _id: "$doctor_id", total_appointments: { $sum: 1 } } }
+])
+{
+  _id: 102,
+  total_appointments: 1
+}
+{
+  _id: 103,
+  total_appointments: 1
+}
+{
+  _id: 104,
+  total_appointments: 2
+}
+db.appointments.aggregate([
+  { $group: { _id: "$doctor_id", total_fees: { $sum: "$fee" } } }
+])
+{
+  _id: 102,
+  total_fees: 1500
+}
+{
+  _id: 103,
+  total_fees: 2500
+}
+{
+  _id: 104,
+  total_fees: 4000
+}
+db.patients.aggregate([
+  { $group: { _id: "$city", avg_age: { $avg: "$age" } } }
+])
+{
+  _id: 'Pune',
+  avg_age: 45
+}
+{
+  _id: 'Chennai',
+  avg_age: 38
+}
+{
+  _id: 'Mumbai',
+  avg_age: 40
+}
+{
+  _id: 'Bangalore',
+  avg_age: 34
+}
+{
+  _id: 'Delhi',
+  avg_age: 29
+}
+db.appointments.aggregate([
+  {
+    $lookup: {
+      from: "patients",
+      localField: "patient_id",
+      foreignField: "_id",
+      as: "patient_info"
+    }
+  },
+  {
+    $lookup: {
+      from: "doctors",
+      localField: "doctor_id",
+      foreignField: "_id",
+      as: "doctor_info"
+    }
+  }
+])
+{
+  _id: ObjectId('68c2b4a7f5add3b86909f19d'),
+  patient_id: 2,
+  doctor_id: 102,
+  date: 2025-01-06T00:00:00.000Z,
+  status: 'Completed',
+  fee: 1500,
+  patient_info: [
+    {
+      _id: 2,
+      name: 'Neha Kapoor',
+      age: 29,
+      gender: 'Female',
+      city: 'Delhi'
+    }
+  ],
+  doctor_info: [
+    {
+      _id: 102,
+      name: 'Dr. Sneha',
+      specialization: 'Dermatology',
+      experience: 8
+    }
+  ]
+}
+{
+  _id: ObjectId('68c2b4a7f5add3b86909f19e'),
+  patient_id: 3,
+  doctor_id: 103,
+  date: 2025-01-07T00:00:00.000Z,
+  status: 'Scheduled',
+  fee: 2500,
+  patient_info: [
+    {
+      _id: 3,
+      name: 'Ravi Sharma',
+      age: 45,
+      gender: 'Male',
+      city: 'Pune'
+    }
+  ],
+  doctor_info: [
+    {
+      _id: 103,
+      name: 'Dr. Amit',
+      specialization: 'Neurology',
+      experience: 12
+    }
+  ]
+}
+{
+  _id: ObjectId('68c2b4a7f5add3b86909f19f'),
+  patient_id: 4,
+  doctor_id: 104,
+  date: 2025-01-08T00:00:00.000Z,
+  status: 'Completed',
+  fee: 1800,
+  patient_info: [
+    {
+      _id: 4,
+      name: 'Priya Singh',
+      age: 38,
+      gender: 'Female',
+      city: 'Chennai'
+    }
+  ],
+  doctor_info: [
+    {
+      _id: 104,
+      name: 'Dr. Pooja',
+      specialization: 'Orthopedics',
+      experience: 10
+    }
+  ]
+}
+{
+  _id: ObjectId('68c2b4a7f5add3b86909f1a0'),
+  patient_id: 1,
+  doctor_id: 104,
+  date: 2025-01-10T00:00:00.000Z,
+  status: 'Completed',
+  fee: 2200,
+  patient_info: [
+    {
+      _id: 1,
+      name: 'Arjun Mehta',
+      age: 34,
+      gender: 'Male',
+      city: 'Bangalore'
+    }
+  ],
+  doctor_info: [
+    {
+      _id: 104,
+      name: 'Dr. Pooja',
+      specialization: 'Orthopedics',
+      experience: 10
+    }
+  ]
+}
+db.appointments.aggregate([
+  { $group: { _id: "$doctor_id", unique_patients: { $addToSet: "$patient_id" } } },
+  { $project: { doctor_id: "$_id", patient_count: { $size: "$unique_patients" } } },
+  { $match: { patient_count: { $gt: 1 } } }
+])
+{
+  _id: 104,
+  doctor_id: 104,
+  patient_count: 2
+}
+db.appointments.aggregate([
+  { $group: { _id: "$patient_id", total_spent: { $sum: "$fee" } } },
+  { $match: { total_spent: { $gt: 3000 } } }
+])
