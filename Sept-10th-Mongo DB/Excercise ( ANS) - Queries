@@ -2,7 +2,7 @@ use libraryDB
 
 switched to db libraryDB
 
-db.books.insertMany([
+db.books.insertMany([                                                                        //Query
 { title: "The Alchemist", author: "Paulo Coelho", genre: "Fiction", year: 1988,
 available: true },
 { title: "Clean Code", author: "Robert C. Martin", genre: "Programming", year: 2008,
@@ -26,7 +26,7 @@ available: false }
   }
 }
 
-db.books.find();
+db.books.find();                                                                               //Query
 
 {
   _id: ObjectId('68c1566341786abe87590c3a'),
@@ -61,7 +61,7 @@ db.books.find();
   available: false
 }
 
-db.books.find({}, { title: 1, author: 1, _id: 0});
+db.books.find({}, { title: 1, author: 1, _id: 0});                                                           //Query
 
 {
   title: 'The Alchemist',
@@ -84,7 +84,7 @@ db.books.find({}, { title: 1, author: 1, _id: 0});
   author: 'James Clear'
 }
 
-db.books.find({ available: true });
+db.books.find({ available: true });                                                                //Query
 
 {
   _id: ObjectId('68c1566341786abe87590c3a'),
@@ -111,7 +111,7 @@ db.books.find({ available: true });
   available: true
 }
 
-db.books.find({ genre: "Programming"});
+db.books.find({ genre: "Programming"});                                                                //Query
 
 {
   _id: ObjectId('68c1566341786abe87590c3b'),
@@ -130,7 +130,7 @@ db.books.find({ genre: "Programming"});
   available: false
 }
 
-db.books.find({ year: { $gt: 2010 }});
+db.books.find({ year: { $gt: 2010 }});                                                                //Query
 
 {
   _id: ObjectId('68c1566341786abe87590c3d'),
@@ -149,7 +149,7 @@ db.books.find({ year: { $gt: 2010 }});
   available: false
 }
 
-db.books.updateOne( { title: "Atomic Habits" }, {$set: {available: true }} );
+db.books.updateOne( { title: "Atomic Habits" }, {$set: {available: true }} );                          //Query
 
 {
   acknowledged: true,
@@ -159,7 +159,7 @@ db.books.updateOne( { title: "Atomic Habits" }, {$set: {available: true }} );
   upsertedCount: 0
 }
 
-db.books.updateOne( { title: "The Alchemist" }, {$set: {year: 1993 }} );
+db.books.updateOne( { title: "The Alchemist" }, {$set: {year: 1993 }} );                                //Query
 
 {
   acknowledged: true,
@@ -169,21 +169,21 @@ db.books.updateOne( { title: "The Alchemist" }, {$set: {year: 1993 }} );
   upsertedCount: 0
 }
 
-db.books.deleteOne({author:"Andrew Hunt"});
+db.books.deleteOne({author:"Andrew Hunt"});                                                             //Query
 
 {
   acknowledged: true,
   deletedCount: 1
 }
 
-db.books.deleteMany({genre:"History"});
+db.books.deleteMany({genre:"History"});                                                                //Query
 
 {
   acknowledged: true,
   deletedCount: 1
 }
 
-db.books.aggregate([ { $group: { _id: "$genre", count: { $sum: 1}}}]);
+db.books.aggregate([ { $group: { _id: "$genre", count: { $sum: 1}}}]);                                   //Query
 
 {
   _id: 'Programming',
@@ -198,7 +198,7 @@ db.books.aggregate([ { $group: { _id: "$genre", count: { $sum: 1}}}]);
   count: 1
 }
 
-db.books.find().sort({ year: 1}).limit(1);
+db.books.find().sort({ year: 1}).limit(1);                                                             //Query
 
 {
   _id: ObjectId('68c1566341786abe87590c3a'),
@@ -209,7 +209,7 @@ db.books.find().sort({ year: 1}).limit(1);
   available: true
 }
 
-db.books.aggregate([ { $group: { _id: null, avgYear: { $avg: "$year"}}}]);
+db.books.aggregate([ { $group: { _id: null, avgYear: { $avg: "$year"}}}]);                               //Query
 
 {
   _id: null,
