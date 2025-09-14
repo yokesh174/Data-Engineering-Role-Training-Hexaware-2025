@@ -1,6 +1,6 @@
 use customer_order_tracker
 
-switched to customer_order_tracker
+switched to db customer_order_tracker
 
 // Insert Feedback Documents
 db.feedback.insertMany([
