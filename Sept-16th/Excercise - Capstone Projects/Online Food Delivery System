@@ -3,7 +3,7 @@ use foodDeliveryDB
 switched to db foodDeliveryDB
 
 
-1.db.customers.insertMany([
+db.customers.insertMany([
 { _id: 1, name: "Rahul Sharma", email: "rahul@example.com", city: "Bangalore" },
 { _id: 2, name: "Priya Singh", email: "priya@example.com", city: "Delhi" },
 { _id: 3, name: "Aman Kumar", email: "aman@example.com", city: "Hyderabad" }
