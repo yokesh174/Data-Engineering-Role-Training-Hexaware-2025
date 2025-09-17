@@ -8,5 +8,5 @@ class Calculator:
     def mul(self): return self.a*self.b
     def div(self): return self.a/self.b
 
-O=Calculator(1,1)
-print(O.add(),O.sub(),O.mul(),O.div())
+C=Calculator(1,1)
+print(C.add(),C.sub(),C.mul(),C.div())
