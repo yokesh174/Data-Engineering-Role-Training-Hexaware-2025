@@ -7,8 +7,8 @@ class Customer:
         return f"my Firstname is {self.firstname} and my Lastname is {self.lastname}"
       
 #create objects of the class
-c1 = Customer('Arun','Kumar')
-c2 = Customer('Jasmine','Priya')
+c1 = Customer('Arun','Prasath')
+c2 = Customer('Yogi','Babu')
 
 #call methods
 print(c1.name())
