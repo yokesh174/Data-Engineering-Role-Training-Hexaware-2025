@@ -49,7 +49,7 @@ def menu():
 
                 add_student(students, new_student)
             except ValueError:
-                print("❌ Invalid input. Please enter numbers where required.")
+                print(" Invalid input. Please enter numbers where required.")
 
         elif choice == "4":
             teachers = load_teachers()
@@ -77,11 +77,11 @@ def menu():
             generate_report()
 
         elif choice == "9":
-            print("👋 Exiting School Management System. Goodbye!")
+            print(" Exiting School Management System. Goodbye!")
             break
 
         else:
-            print("❌ Invalid choice. Please select between 1 and 9.")
+            print(" Invalid choice. Please select between 1 and 9.")
 
 
 if __name__ == "__main__":
