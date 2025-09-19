@@ -1,5 +1,5 @@
 class Order:
-    def _init_(self, order_id, customer, items):
+    def __init__(self, order_id, customer, items):
         self.order_id = order_id
         self.customer = customer
         self.items = items  # list of (Product, qty)
