@@ -4,14 +4,28 @@ from pyspark.sql.functions import col, when, count
 # Initialize Spark
 spark = SparkSession.builder.appName("OrderAnalysis").getOrCreate()
 
-# Load cleaned dataset from Week 2
-df = spark.read.csv("cleaned_orders.csv", header=True, inferSchema=True)
+# Load CSV exports (from Week 1 MySQL)
+customers = spark.read.csv("customers.csv", header=True, inferSchema=True)
+orders = spark.read.csv("orders.csv", header=True, inferSchema=True)
+delivery = spark.read.csv("delivery_status.csv", header=True, inferSchema=True)
 
-# Add delayed flag in Spark (redundant if already exists, but for demo)
-df = df.withColumn("delayed", when(col("delay_days") > 0, 1).otherwise(0))
+# Join orders with customers
+orders_customers = orders.join(customers, on="customer_id", how="inner")
 
-# Group by customer region (city/state) to count delays
-delays_by_region = df.groupBy("city", "state").agg(count(when(col("delayed") == 1, True)).alias("delayed_orders"))
+# Join with delivery status
+full_data = orders_customers.join(delivery, on="order_id", how="left")
+
+# Add delayed flag
+full_data = full_data.withColumn(
+    "delayed",
+    when(col("delivery_date") > col("estimated_date"), 1).otherwise(0)
+)
+
+# Group by region (city, state) to count delays
+delays_by_region = (
+    full_data.groupBy("city", "state")
+    .agg(count(when(col("delayed") == 1, True)).alias("delayed_orders"))
+)
 
 # Show results
 delays_by_region.show(truncate=False)
