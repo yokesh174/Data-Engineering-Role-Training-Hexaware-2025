@@ -6,7 +6,7 @@
 |-----------------------|--------------------------------------------|----------------------------------------|
 | **Initial Setup**     | 2 physical servers (Feb) + 3 servers (Apr–Aug) | 2 VMs + 2 App Service servers (Feb)    |
 | **Approvals**         | Requires approvals from Directors, CEO, COO | Same approvals, but faster deployment  |
-| **Procurement**       | Vendor in Germany – ~2 weeks delay         | No physical procurement – instant setup|
+| **Procurement**       | EX:Hardware from Germany - 2 weeks delay         | No physical procurement – instant setup|
 | **Networking**        | 3 teams + 1 backup team (24/7 work)        | Handled by cloud provider              |
 | **Power Supply**      | Continuous supply needed (CTC managed)     | Not needed (cloud provider handles it) |
 | **Room Rent**         | Server room rent required                  | Not needed                             |
